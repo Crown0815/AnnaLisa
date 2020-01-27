@@ -1,22 +1,46 @@
-using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
+using System.Linq;
 
 namespace AnnaLisa
 {
-    public class AnalysisNode
+    public class AnalysisNode : IDataSource
     {
-        public object? Data{ get; private set; }
-        public Task Calculation { get; } = Task.CompletedTask;
-        public bool HasData => Data is {};
+        public AnalysisNode()
+        {
+            Data = Analyzed(SourceData());
+        }
 
-        private List<IDataSource> _dataSources = new List<IDataSource>();
-        public IReadOnlyCollection<IDataSource> DataSources => _dataSources;
+        public IAnalysisData Data { get; private set; }
+
+        private IAnalysisOperation _operation;
+
+        private IAnalysisData Analyzed(IAnalysisData data)
+        {
+            return _operation is null ? data : _operation.Perform(data);
+        }
+
+        private IAnalysisData SourceData()
+        {
+            if (!_dataSources.Any()) return new EmptyAnalysisData();
+            if (_dataSources.Count == 1) return _dataSources.Single().Data;
+            return AccumulatedDataFrom(_dataSources);
+        }
+
+        private static IAnalysisData AccumulatedDataFrom(IEnumerable<IDataSource> sources) 
+            => new MergedAnalysisData(sources.Select(x => x.Data).ToArray());
+
+        private readonly List<IDataSource> _dataSources = new List<IDataSource>();
 
         public void AddSource(IDataSource dataSource)
         {
             _dataSources.Add(dataSource);
-            Data = dataSource.Data;
+            Data = Analyzed(SourceData());
+        }
+
+        public void Set(IAnalysisOperation operation)
+        {
+            _operation = operation;
+            Data = Analyzed(SourceData());
         }
     }
 }

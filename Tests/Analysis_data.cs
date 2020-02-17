@@ -27,7 +27,7 @@ namespace AnnaLisa.Testing
         }
 
         [Fact]
-        public void can_have_a_single_collection_of_two_dimensional_points()
+        public void can_have_a_single_collection_of_points()
         {
             var points = new Point[] {(1, 1), (2, 2)};
             
@@ -37,7 +37,7 @@ namespace AnnaLisa.Testing
         }
 
         [Fact]
-        public void can_have_multiple_collections_of_two_dimensional_points()
+        public void can_have_multiple_collections_of_points()
         {
             var points1 = new Point[] {(1, 1)};
             var points2 = new Point[] {(2, 2)};
@@ -62,7 +62,7 @@ namespace AnnaLisa.Testing
         }
         
         [Fact]
-        public void can_have_units_and_multiple_sets_of_points()
+        public void can_have_units_and_multiple_collections_of_points()
         {
             const string xUnit = "x";
             const string yUnit = "y";

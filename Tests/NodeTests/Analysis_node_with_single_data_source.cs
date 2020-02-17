@@ -2,7 +2,7 @@ using NSubstitute;
 using Shouldly;
 using Xunit;
 
-namespace AnnaLisa.Testing
+namespace AnnaLisa.Testing.NodeTests
 {
     public class Analysis_node_with_single_data_source
     {

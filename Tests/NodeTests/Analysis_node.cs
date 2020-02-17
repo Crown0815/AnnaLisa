@@ -1,9 +1,8 @@
 using System.Linq;
-using NSubstitute;
 using Shouldly;
 using Xunit;
 
-namespace AnnaLisa.Testing
+namespace AnnaLisa.Testing.NodeTests
 {
     public class Analysis_node
     {

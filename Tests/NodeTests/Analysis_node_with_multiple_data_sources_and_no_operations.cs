@@ -1,7 +1,7 @@
 using Shouldly;
 using Xunit;
 
-namespace AnnaLisa.Testing
+namespace AnnaLisa.Testing.NodeTests
 {
     public class Analysis_node_with_multiple_data_sources_and_no_operations
     {

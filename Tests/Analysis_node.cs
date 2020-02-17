@@ -40,10 +40,9 @@ namespace AnnaLisa.Testing
         {
             var analysisNode = new AnalysisNode();
             var dataSource = new DataSource();
-            var data = dataSource.Data;
             var operation = Substitute.For<IAnalysisOperation>();
             var operationResult = Substitute.For<IAnalysisData>();
-            operation.Perform(data).Returns(operationResult);
+            operation.Perform(dataSource.Data).Returns(operationResult);
             
             analysisNode.AddSource(dataSource);
             analysisNode.Set(operation);

@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using AnnaLisa.DataStructures;
 
 namespace AnnaLisa
 {
@@ -21,7 +22,7 @@ namespace AnnaLisa
 
         private IAnalysisData SourceData()
         {
-            if (!_dataSources.Any()) return new EmptyAnalysisData();
+            if (!_dataSources.Any()) return AnalysisData.Empty();
             if (_dataSources.Count == 1) return _dataSources.Single().Data;
             return AccumulatedDataFrom(_dataSources);
         }

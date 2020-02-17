@@ -1,3 +1,4 @@
+using System.Linq;
 using NSubstitute;
 using Shouldly;
 using Xunit;
@@ -20,14 +21,6 @@ namespace AnnaLisa.Testing
             var analysisNode = new AnalysisNode();
 
             analysisNode.Data.ShouldBe(analysisNode.Data);
-        }
-
-        private static (IDataSource, IAnalysisData) TestDataSource()
-        {
-            var dataSource = Substitute.For<IDataSource>();
-            var data = Substitute.For<IAnalysisData>();
-            dataSource.Data.Returns(data);
-            return (dataSource, data);
         }
 
         [Fact]
@@ -62,16 +55,19 @@ namespace AnnaLisa.Testing
         public void with_multiple_data_sources_and_no_operations_exposes_accumulated_data_from_all_data_sources()
         {
             var analysisNode = new AnalysisNode();
-            var (dataSource1, data1) = TestDataSource();
-            var (dataSource2, data2) = TestDataSource();
+
+            var points1 = new Point[] {(0, 0), (1, 1)};
+            var points2 = new Point[] {(2, 2), (3, 3)};
+            var dataSource1 = new DataSource(points1);
+            var dataSource2 = new DataSource(points2);
+            
 
             analysisNode.AddSource(dataSource1);
             analysisNode.AddSource(dataSource2);
 
-            analysisNode.Data.ShouldBeAssignableTo<IAccumulatedAnalysisData>();
-
-            var accumulated = (IAccumulatedAnalysisData)analysisNode.Data;
-            accumulated.SourceData.ShouldBe(new []{data1, data2});
+            analysisNode.Data.PointSets[0].ShouldBe(points1);
+            analysisNode.Data.PointSets[1].ShouldBe(points2);
+            analysisNode.Data.PointSets.Count.ShouldBe(2);
         }
         
         [Fact]
@@ -94,14 +90,15 @@ namespace AnnaLisa.Testing
         [Fact]
         public void can_be_used_as_data_source_for_other_analysis_node()
         {
+            var dataSource = new DataSource(new Point[] {(0, 0), (0, 0)});
             var childNode = new AnalysisNode();
             var parentNode = new AnalysisNode();
-            var (dataSource, data) = TestDataSource();
+            
             childNode.AddSource(dataSource);
 
             parentNode.AddSource(childNode);
 
-            parentNode.Data.ShouldBe(data);
+            parentNode.Data.PointSets.Single().ShouldBe(new Point[] {(0, 0), (0, 0)});
         }
     }
 }

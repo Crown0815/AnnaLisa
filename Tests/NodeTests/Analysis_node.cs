@@ -1,4 +1,5 @@
 using System.Linq;
+using NSubstitute;
 using Shouldly;
 using Xunit;
 
@@ -34,6 +35,22 @@ namespace AnnaLisa.Testing.NodeTests
             parentNode.AddSource(childNode);
 
             parentNode.Data.PointSets.Single().ShouldBe(new Point[] {(0, 0), (0, 0)});
+        }
+
+        [Fact]
+        public void evaluates_data_lazily()
+        {
+            var dataSource = new DataSource();
+            var operation = Substitute.For<IAnalysisOperation>();
+            var operationResult = Substitute.For<IAnalysisData>();
+            operation.Perform(dataSource.Data).Returns(operationResult);
+            var analysisNode = new AnalysisNode();
+            
+            analysisNode.AddSource(dataSource);
+            analysisNode.Set(operation);
+
+            operation.Received(0).Perform(Arg.Any<IAnalysisData>());
+            analysisNode.Data.ShouldBe(operationResult);
         }
     }
 }

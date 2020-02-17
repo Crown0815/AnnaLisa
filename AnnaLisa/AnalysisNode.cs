@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using AnnaLisa.DataStructures;
@@ -6,12 +7,10 @@ namespace AnnaLisa
 {
     public class AnalysisNode : IDataSource
     {
-        public AnalysisNode()
-        {
-            Data = Analyzed(SourceData());
-        }
-
-        public IAnalysisData Data { get; private set; }
+        public AnalysisNode() => _data = LazyData();
+        
+        private Lazy<IAnalysisData> _data;
+        public IAnalysisData Data => _data.Value;
 
         private IAnalysisOperation _operation;
 
@@ -35,13 +34,15 @@ namespace AnnaLisa
         public void AddSource(IDataSource dataSource)
         {
             _dataSources.Add(dataSource);
-            Data = Analyzed(SourceData());
+            _data = LazyData();
         }
 
         public void Set(IAnalysisOperation operation)
         {
             _operation = operation;
-            Data = Analyzed(SourceData());
+            _data = LazyData();
         }
+        
+        private Lazy<IAnalysisData> LazyData() => new Lazy<IAnalysisData>(() => Analyzed(SourceData()));
     }
 }

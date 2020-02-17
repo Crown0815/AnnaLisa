@@ -2,7 +2,7 @@ using System.Linq;
 using Shouldly;
 using Xunit;
 
-namespace AnnaLisa.Testing
+namespace AnnaLisa.Testing.Operations
 {
     public abstract class OperationTestBase
     {

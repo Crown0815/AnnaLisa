@@ -3,7 +3,7 @@ using AnnaLisa.Operations;
 using Shouldly;
 using Xunit;
 
-namespace AnnaLisa.Testing
+namespace AnnaLisa.Testing.Operations
 {
     public class Stretch_operation : OperationTestBase
     {

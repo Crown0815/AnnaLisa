@@ -5,10 +5,7 @@ namespace AnnaLisa
 {
     public class DataSource : IDataSource
     {
-        public DataSource(IReadOnlyCollection<Point> points)
-        {
-            Data = new AnalysisData(points);
-        }
+        public DataSource(IReadOnlyCollection<Point> points) : this(pointSets: points){}
         
         public DataSource(string xUnit = null, string yUnit = null, params IReadOnlyCollection<Point>[] pointSets)
         {

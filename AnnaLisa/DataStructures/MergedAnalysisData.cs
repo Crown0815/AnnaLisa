@@ -10,7 +10,7 @@ namespace AnnaLisa.DataStructures
             SourceData = sourceData.ToList();
             XUnit = sourceData.Shared(x => x.XUnit);
             YUnit = sourceData.Shared(x => x.YUnit);
-            IsEmpty = !SourceData.Any();
+            IsEmpty = sourceData.All(data => data.IsEmpty);
 
             PointSets = SourceData.SelectMany(x => x.PointSets).ToList();
         }

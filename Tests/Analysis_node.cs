@@ -86,6 +86,19 @@ namespace AnnaLisa.Testing
             analysisNode.Data.XUnit.ShouldBe(xUnit);
             analysisNode.Data.YUnit.ShouldBe(yUnit);
         }
+        
+        [Fact]
+        public void with_multiple_empty_data_sources_and_no_operations_exposes_empty_data_source()
+        {
+            var analysisNode = new AnalysisNode();
+            var dataSource1 = new DataSource();
+            var dataSource2 = new DataSource();
+
+            analysisNode.AddSource(dataSource1);
+            analysisNode.AddSource(dataSource2);
+
+            analysisNode.Data.IsEmpty.ShouldBeTrue();
+        }
 
         [Fact]
         public void can_be_used_as_data_source_for_other_analysis_node()

@@ -34,18 +34,20 @@ namespace AnnaLisa.Testing
         public void with_single_data_source_and_no_operations_forwards_data_from_data_source()
         {
             var analysisNode = new AnalysisNode();
-            var (dataSource, data) = TestDataSource();
+            var dataSource = new DataSource();
+            var expected = dataSource.Data;
             
             analysisNode.AddSource(dataSource);
 
-            analysisNode.Data.ShouldBe(data);
+            analysisNode.Data.ShouldBe(expected);
         }
         
         [Fact]
         public void with_single_data_source_and_operations_exposes_operation_result()
         {
             var analysisNode = new AnalysisNode();
-            var (dataSource, data) = TestDataSource();
+            var dataSource = new DataSource();
+            var data = dataSource.Data;
             var operation = Substitute.For<IAnalysisOperation>();
             var operationResult = Substitute.For<IAnalysisData>();
             operation.Perform(data).Returns(operationResult);
@@ -73,23 +75,14 @@ namespace AnnaLisa.Testing
         }
         
         [Fact]
-        public void with_multiple_data_sources_and_no_operations_exposes_data_with_same_units_as_data_from_sources()
+        public void with_multiple_data_sources_and_no_operations_preverses_units_from_from_sources()
         {
             const string xUnit = "x";
             const string yUnit = "y";
-            static (IDataSource, IAnalysisData) DataSource()
-            {
-                var dataSource = Substitute.For<IDataSource>();
-                var data = Substitute.For<IAnalysisData>();
-                data.XUnit.Returns(xUnit);
-                data.YUnit.Returns(yUnit);
-                dataSource.Data.Returns(data);
-                return (dataSource, data);
-            }
             
             var analysisNode = new AnalysisNode();
-            var (dataSource1, data1) = DataSource();
-            var (dataSource2, data2) = DataSource();
+            var dataSource1 = new DataSource(xUnit, yUnit);
+            var dataSource2  = new DataSource(xUnit, yUnit);
 
             analysisNode.AddSource(dataSource1);
             analysisNode.AddSource(dataSource2);

@@ -5,8 +5,10 @@ using Xunit;
 
 namespace AnnaLisa.Testing
 {
-    public class Shift_operation
+    public class Shift_operation : OperationTestBase
     {
+        protected override IAnalysisOperation DataModifyingOperation() => new ShiftOperation {XShift = 1, YShift = 1};
+
         [Fact]
         public void shifts_all_x_data_values_by_x_shift()
         {
@@ -97,21 +99,6 @@ namespace AnnaLisa.Testing
             node.Data.PointSets.ShouldBeEmpty();
             node.Data.XUnit.ShouldBeNull();
             node.Data.YUnit.ShouldBeNull();
-        }
-
-        [Fact]
-        public void leaves_original_data_unchanged()
-        {
-            var points = new Point[]{(1, 1), (2, 2)};
-            var dataSource = new DataSource(points);
-            
-            var node = new AnalysisNode();
-            var shift = new ShiftOperation {XShift = 1, YShift = 1};
-            node.AddSource(dataSource);
-            
-            node.Set(shift);
-
-            dataSource.Data.PointSets.Single().ShouldBe(new Point[]{(1, 1), (2, 2)});
         }
     }
 }

@@ -8,9 +8,9 @@ namespace AnnaLisa.Testing
     public class Enumerable
     {
         [Fact]
-        public void with_nothing_assigned_is_null_or_empty()
+        public void with_null_value_assigned_is_null_or_empty()
         {
-            ((IEnumerable<object>) null).IsNullOrEmpty().ShouldBeTrue();
+            ((IEnumerable<object>?) null).IsNullOrEmpty().ShouldBeTrue();
         }
         
         [Fact]

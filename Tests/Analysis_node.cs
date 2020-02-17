@@ -75,7 +75,7 @@ namespace AnnaLisa.Testing
         }
         
         [Fact]
-        public void with_multiple_data_sources_and_no_operations_preverses_units_from_from_sources()
+        public void with_multiple_data_sources_and_no_operations_preserves_units_from_from_sources()
         {
             const string xUnit = "x";
             const string yUnit = "y";

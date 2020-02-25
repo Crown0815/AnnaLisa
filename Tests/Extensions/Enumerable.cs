@@ -1,9 +1,10 @@
 using System;
 using System.Collections.Generic;
+using AnnaLisa.Extensions;
 using Shouldly;
 using Xunit;
 
-namespace AnnaLisa.Testing
+namespace AnnaLisa.Testing.Extensions
 {
     public class Enumerable
     {

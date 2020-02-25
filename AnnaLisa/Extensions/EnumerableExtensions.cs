@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace AnnaLisa
+namespace AnnaLisa.Extensions
 {
     public static class EnumerableExtensions
     {

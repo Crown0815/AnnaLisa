@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using AnnaLisa.Extensions;
 using Shouldly;
 using Xunit;
@@ -8,26 +7,144 @@ namespace AnnaLisa.Testing.Extensions
 {
     public class Double
     {
-        private static IEnumerable<double> WholeNumberRange()
-        {
-            for (var exponent = 0; exponent < 9; exponent++)
-            for (var integer = -9; integer < 9; integer++)
-                yield return integer.E(exponent);
-        }
+        private static double ToleranceFor(double value) => Math.Abs(value) * 1e-5;
         
-        public static TheoryData<double, bool> IsWholeNumberTheoryData()
-        {
-            var data = new TheoryData<double, bool>();
-            foreach (var number in WholeNumberRange())
-            {
-                data.Add(number,           true);
-                data.Add(number + Math.PI, false);
-            }
-
-            return data;
-        }
         [Theory]
-        [MemberData(nameof(IsWholeNumberTheoryData))]
+        // negative whole numbers
+        [InlineData(-1e0, true)]
+        [InlineData(-2e0, true)]
+        [InlineData(-4e0, true)]
+        [InlineData(-5e0, true)]
+        [InlineData(-6e0, true)]
+        [InlineData(-7e0, true)]
+        [InlineData(-8e0, true)]
+        [InlineData(-9e0, true)]
+        [InlineData(-1e1, true)]
+        [InlineData(-2e1, true)]
+        [InlineData(-4e1, true)]
+        [InlineData(-5e1, true)]
+        [InlineData(-6e1, true)]
+        [InlineData(-7e1, true)]
+        [InlineData(-8e1, true)]
+        [InlineData(-9e1, true)]
+        [InlineData(-1e5, true)]
+        [InlineData(-2e5, true)]
+        [InlineData(-4e5, true)]
+        [InlineData(-5e5, true)]
+        [InlineData(-6e5, true)]
+        [InlineData(-7e5, true)]
+        [InlineData(-8e5, true)]
+        [InlineData(-9e5, true)]
+        [InlineData(-1e9, true)]
+        [InlineData(-2e9, true)]
+        [InlineData(-4e9, true)]
+        [InlineData(-5e9, true)]
+        [InlineData(-6e9, true)]
+        [InlineData(-7e9, true)]
+        [InlineData(-8e9, true)]
+        [InlineData(-9e9, true)]
+        
+        // positive whole numbers
+        [InlineData(+1e0, true)]
+        [InlineData(+2e0, true)]
+        [InlineData(+4e0, true)]
+        [InlineData(+5e0, true)]
+        [InlineData(+6e0, true)]
+        [InlineData(+7e0, true)]
+        [InlineData(+8e0, true)]
+        [InlineData(+9e0, true)]
+        [InlineData(+1e1, true)]
+        [InlineData(+2e1, true)]
+        [InlineData(+4e1, true)]
+        [InlineData(+5e1, true)]
+        [InlineData(+6e1, true)]
+        [InlineData(+7e1, true)]
+        [InlineData(+8e1, true)]
+        [InlineData(+9e1, true)]
+        [InlineData(+1e5, true)]
+        [InlineData(+2e5, true)]
+        [InlineData(+4e5, true)]
+        [InlineData(+5e5, true)]
+        [InlineData(+6e5, true)]
+        [InlineData(+7e5, true)]
+        [InlineData(+8e5, true)]
+        [InlineData(+9e5, true)]
+        [InlineData(+1e9, true)]
+        [InlineData(+2e9, true)]
+        [InlineData(+4e9, true)]
+        [InlineData(+5e9, true)]
+        [InlineData(+6e9, true)]
+        [InlineData(+7e9, true)]
+        [InlineData(+8e9, true)]
+        [InlineData(+9e9, true)]
+        
+        // negative real numbers
+        [InlineData(-1e0 + Math.PI, false)]
+        [InlineData(-2e0 + Math.PI, false)]
+        [InlineData(-4e0 + Math.PI, false)]
+        [InlineData(-5e0 + Math.PI, false)]
+        [InlineData(-6e0 + Math.PI, false)]
+        [InlineData(-7e0 + Math.PI, false)]
+        [InlineData(-8e0 + Math.PI, false)]
+        [InlineData(-9e0 + Math.PI, false)]
+        [InlineData(-1e1 + Math.PI, false)]
+        [InlineData(-2e1 + Math.PI, false)]
+        [InlineData(-4e1 + Math.PI, false)]
+        [InlineData(-5e1 + Math.PI, false)]
+        [InlineData(-6e1 + Math.PI, false)]
+        [InlineData(-7e1 + Math.PI, false)]
+        [InlineData(-8e1 + Math.PI, false)]
+        [InlineData(-9e1 + Math.PI, false)]
+        [InlineData(-1e5 + Math.PI, false)]
+        [InlineData(-2e5 + Math.PI, false)]
+        [InlineData(-4e5 + Math.PI, false)]
+        [InlineData(-5e5 + Math.PI, false)]
+        [InlineData(-6e5 + Math.PI, false)]
+        [InlineData(-7e5 + Math.PI, false)]
+        [InlineData(-8e5 + Math.PI, false)]
+        [InlineData(-9e5 + Math.PI, false)]
+        [InlineData(-1e9 + Math.PI, false)]
+        [InlineData(-2e9 + Math.PI, false)]
+        [InlineData(-4e9 + Math.PI, false)]
+        [InlineData(-5e9 + Math.PI, false)]
+        [InlineData(-6e9 + Math.PI, false)]
+        [InlineData(-7e9 + Math.PI, false)]
+        [InlineData(-8e9 + Math.PI, false)]
+        [InlineData(-9e9 + Math.PI, false)]
+        
+        // positive real numbers
+        [InlineData(+1e0 + Math.PI, false)]
+        [InlineData(+2e0 + Math.PI, false)]
+        [InlineData(+4e0 + Math.PI, false)]
+        [InlineData(+5e0 + Math.PI, false)]
+        [InlineData(+6e0 + Math.PI, false)]
+        [InlineData(+7e0 + Math.PI, false)]
+        [InlineData(+8e0 + Math.PI, false)]
+        [InlineData(+9e0 + Math.PI, false)]
+        [InlineData(+1e1 + Math.PI, false)]
+        [InlineData(+2e1 + Math.PI, false)]
+        [InlineData(+4e1 + Math.PI, false)]
+        [InlineData(+5e1 + Math.PI, false)]
+        [InlineData(+6e1 + Math.PI, false)]
+        [InlineData(+7e1 + Math.PI, false)]
+        [InlineData(+8e1 + Math.PI, false)]
+        [InlineData(+9e1 + Math.PI, false)]
+        [InlineData(+1e5 + Math.PI, false)]
+        [InlineData(+2e5 + Math.PI, false)]
+        [InlineData(+4e5 + Math.PI, false)]
+        [InlineData(+5e5 + Math.PI, false)]
+        [InlineData(+6e5 + Math.PI, false)]
+        [InlineData(+7e5 + Math.PI, false)]
+        [InlineData(+8e5 + Math.PI, false)]
+        [InlineData(+9e5 + Math.PI, false)]
+        [InlineData(+1e9 + Math.PI, false)]
+        [InlineData(+2e9 + Math.PI, false)]
+        [InlineData(+4e9 + Math.PI, false)]
+        [InlineData(+5e9 + Math.PI, false)]
+        [InlineData(+6e9 + Math.PI, false)]
+        [InlineData(+7e9 + Math.PI, false)]
+        [InlineData(+8e9 + Math.PI, false)]
+        [InlineData(+9e9 + Math.PI, false)]
         public void is_whole_number_for(double value, bool returns)
         {
             value.IsWholeNumber().ShouldBe(returns);
@@ -43,9 +160,27 @@ namespace AnnaLisa.Testing.Extensions
         [InlineData(3, 7, 7e3)]
         [InlineData(2, 8, 8e2)]
         [InlineData(1, 9, 9e1)]
+        [InlineData(9, -1, -1e9)]
+        [InlineData(8, -2, -2e8)]
+        [InlineData(7, -3, -3e7)]
+        [InlineData(6, -4, -4e6)]
+        [InlineData(5, -5, -5e5)]
+        [InlineData(4, -6, -6e4)]
+        [InlineData(3, -7, -7e3)]
+        [InlineData(2, -8, -8e2)]
+        [InlineData(1, -9, -9e1)]
+        [InlineData(-9, 1, 1e-9)]
+        [InlineData(-8, 2, 2e-8)]
+        [InlineData(-7, 3, 3e-7)]
+        [InlineData(-6, 4, 4e-6)]
+        [InlineData(-5, 5, 5e-5)]
+        [InlineData(-4, 6, 6e-4)]
+        [InlineData(-3, 7, 7e-3)]
+        [InlineData(-2, 8, 8e-2)]
+        [InlineData(-1, 9, 9e-1)]
         public void E(int exponent, int ofValue, double returns)
         {
-            ofValue.E(exponent).ShouldBe(returns);
+            ofValue.E(exponent).ShouldBe(returns, ToleranceFor(returns));
         }
     }
 }
